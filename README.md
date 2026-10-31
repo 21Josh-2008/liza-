@@ -1,2 +1,2 @@
-# liza-
+# lisa-
 personal AI assistant 
