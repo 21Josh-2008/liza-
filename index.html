@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#16a34a">
+<title>KhataPilot AI</title>
+<style>
+:root{--green:#16a34a;--green2:#15803d;--bg:#f6f8f7;--card:#fff;--text:#17201b;--muted:#6b756f;--line:#e5e9e6;--danger:#dc2626;--amber:#d97706}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}button{border:0;cursor:pointer}.app{min-height:100vh;max-width:1100px;margin:auto;background:var(--bg)}
+header{position:sticky;top:0;z-index:5;background:rgba(246,248,247,.94);backdrop-filter:blur(12px);padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:800;font-size:20px}.brand span{color:var(--green)}.avatar{width:40px;height:40px;border-radius:50%;background:#dcfce7;color:var(--green2);display:grid;place-items:center;font-weight:800}
+main{padding:18px 16px 100px}.view{display:none}.view.active{display:block}.eyebrow{color:var(--green2);font-size:13px;font-weight:700}.title{font-size:28px;line-height:1.1;margin:5px 0 16px}.muted{color:var(--muted)}
+.grid{display:grid;gap:12px}.stats{grid-template-columns:repeat(2,1fr)}.stat,.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 3px 12px rgba(0,0,0,.035)}.stat small{color:var(--muted)}.stat strong{display:block;font-size:23px;margin-top:7px}.green{color:var(--green2)}.danger{color:var(--danger)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}.primary,.secondary{padding:15px;border-radius:16px;font-weight:800}.primary{background:var(--green);color:#fff}.secondary{background:#fff;border:1px solid var(--line);color:var(--text)}
+.chart{height:180px;display:flex;align-items:end;gap:9px;padding:12px 4px}.bar{flex:1;background:#86efac;border-radius:8px 8px 2px 2px;min-height:18px}.bar.today{background:var(--green)}.barlabel{font-size:10px;color:var(--muted);text-align:center}.barwrap{flex:1;display:flex;flex-direction:column;justify-content:end;height:100%;gap:5px}
+.ai{background:#0f172a;color:#fff;border-radius:20px;padding:18px}.ai h3{margin:0 0 8px}.chips{display:flex;gap:8px;overflow:auto;padding-bottom:4px}.chip{white-space:nowrap;background:#fff;color:#243029;border:1px solid var(--line);padding:9px 12px;border-radius:999px;font-size:13px}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(1100px,100%);height:72px;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);z-index:10}.nav{background:none;color:var(--muted);font-size:11px}.nav b{display:block;font-size:21px;margin-bottom:2px}.nav.active{color:var(--green2);font-weight:800}
+.fab{width:56px;height:56px;border-radius:50%;background:var(--green);color:#fff;font-size:28px;box-shadow:0 8px 25px rgba(22,163,74,.3);position:fixed;bottom:84px;left:50%;transform:translateX(-50%);z-index:9}
+.row{display:flex;justify-content:space-between;gap:12px;align-items:center}.list{display:flex;flex-direction:column}.item{padding:14px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}
+.badge{font-size:11px;padding:5px 8px;border-radius:999px;background:#dcfce7;color:var(--green2);font-weight:700}.badge.amber{background:#fef3c7;color:#92400e}.badge.red{background:#fee2e2;color:#991b1b}
+.tabs{display:flex;background:#eaf0ec;border-radius:12px;padding:3px;margin-bottom:12px}.tab{flex:1;padding:10px;border-radius:9px;background:none}.tab.active{background:#fff;font-weight:800;box-shadow:0 1px 4px #0001}
+.modal{position:fixed;inset:0;background:#0007;display:none;align-items:end;z-index:20}.modal.show{display:flex}.sheet{background:#fff;width:100%;max-height:88vh;overflow:auto;border-radius:24px 24px 0 0;padding:20px}.sheet h2{margin-top:0}.input{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;margin:6px 0 12px}.optiongrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.option{padding:15px;background:#f7faf8;border:1px solid var(--line);border-radius:14px;text-align:left}.mic{width:120px;height:120px;border-radius:50%;background:#dcfce7;color:var(--green2);font-size:48px;margin:20px auto;display:grid;place-items:center}.center{text-align:center}.progress{height:10px;background:#e8eee9;border-radius:10px;overflow:hidden}.progress i{display:block;height:100%;background:var(--green);width:72%}
+@media(min-width:760px){main{padding:28px 28px 100px}.stats{grid-template-columns:repeat(4,1fr)}.actions{max-width:500px}.sheet{width:520px;margin:auto;border-radius:24px;margin-bottom:20px}.modal{align-items:center}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand">Khata<span>Pilot</span> AI</div><div class="avatar" onclick="show('profile')">J</div></header>
+<main>
+<section id="home" class="view active">
+<div class="eyebrow">Joshua Stores</div><h1 class="title">Good morning, Joshua 👋</h1>
+<div class="grid stats">
+<div class="stat"><small>Today's Sales</small><strong>₹12,450</strong></div>
+<div class="stat"><small>Today's Expenses</small><strong>₹4,250</strong></div>
+<div class="stat"><small>Net Cash</small><strong class="green">₹8,200</strong></div>
+<div class="stat"><small>Customers Owing</small><strong>₹18,500</strong></div>
+</div>
+<div class="actions"><button class="primary" onclick="openVoice()">🎤 Speak to Record</button><button class="secondary" onclick="openScan()">📷 Scan Bill</button></div>
+<div class="card"><div class="row"><div><b>Weekly cash flow</b><div class="muted">Last 7 days</div></div><span class="badge">+18%</span></div>
+<div class="chart" id="chart"></div></div>
+<div class="ai" style="margin-top:14px"><h3>Ask KhataPilot</h3><p style="opacity:.75;margin-top:0">Your business assistant</p><div class="chips">
+<button class="chip" onclick="ask('Which item earns the most?')">Which item earns the most?</button>
+<button class="chip" onclick="ask('Who owes me money?')">Who owes me money?</button>
+<button class="chip" onclick="ask('How much did I spend this week?')">Weekly expenses?</button>
+</div></div>
+</section>
+
+<section id="khata" class="view"><div class="eyebrow">Digital Khata</div><h1 class="title">Your ledger</h1>
+<div class="tabs"><button class="tab active" onclick="tab(this,'customers')">Customers</button><button class="tab" onclick="tab(this,'suppliers')">Suppliers</button><button class="tab" onclick="tab(this,'transactions')">Transactions</button></div>
+<div id="ledger"></div></section>
+
+<section id="insights" class="view"><div class="eyebrow">Understand</div><h1 class="title">Business insights</h1>
+<div class="card"><div class="row"><b>Cash flow forecast</b><span class="badge">7 days</span></div><div class="chart" id="forecast"></div><h3>Expected cash next week: ₹42,500</h3><p class="muted">AI insight: your expenses are expected to increase next week because of the usual stock purchase.</p></div>
+<div class="card" style="margin-top:12px"><h3>AI Alerts</h3><div class="item">⚠️ Expense unusually high this week.</div><div class="item">⚠️ Duplicate transaction detected.</div><div class="item">⚠️ Large credit balance from a customer.</div></div>
+</section>
+
+<section id="credit" class="view"><div class="eyebrow">Fund</div><h1 class="title">Credit readiness</h1>
+<div class="card center"><div class="muted">Demo readiness indicator</div><div style="font-size:54px;font-weight:900;margin:10px">72<span style="font-size:20px"> / 100</span></div><div class="progress"><i></i></div></div>
+<div class="card" style="margin-top:12px"><h3>Factors</h3><div class="item row"><span>Transaction consistency</span><b>Strong</b></div><div class="item row"><span>Sales history</span><b>Strong</b></div><div class="item row"><span>Cash-flow stability</span><b>Good</b></div><div class="item row"><span>Repayment history</span><b>Good</b></div></div>
+<div class="card" style="margin-top:12px"><h3>Potential Funding</h3><div class="item"><div class="row"><b>₹25,000</b><span class="badge amber">Demo / Example Offer</span></div><span class="muted">Micro-business working capital</span></div><div class="item"><div class="row"><b>₹50,000</b><span class="badge amber">Demo / Example Offer</span></div><span class="muted">Business expansion</span></div><p class="muted" style="font-size:12px">Actual eligibility is determined by regulated lending partners.</p></div>
+</section>
+
+<section id="profile" class="view"><div class="eyebrow">Account</div><h1 class="title">Profile & Settings</h1><div class="card"><div class="item"><b>Owner</b><br>Joshua</div><div class="item"><b>Shop</b><br>Joshua Stores</div><div class="item"><b>Shop type</b><br>Grocery</div><div class="item"><b>City</b><br>Chennai</div><div class="item"><b>Language</b><br><select class="input" style="margin:8px 0 0"><option>English</option><option>Tamil</option><option>Hindi</option><option>Other Indian language</option></select></div></div>
+<div class="card" style="margin-top:12px"><div class="item row"><span>🔐 Merchant owns their data</span><b>✓</b></div><div class="item row"><span>🔒 Encryption</span><b>✓</b></div><div class="item row"><span>Share data with lending partners</span><input type="checkbox" checked></div></div></section>
+</main>
+<button class="fab" onclick="openAdd()">+</button>
+<nav class="bottom">
+<button class="nav active" onclick="show('home',this)"><b>⌂</b>Home</button>
+<button class="nav" onclick="show('khata',this)"><b>▤</b>Khata</button>
+<button class="nav" onclick="openAdd()"><b>＋</b>Add</button>
+<button class="nav" onclick="show('insights',this)"><b>◔</b>Insights</button>
+<button class="nav" onclick="show('credit',this)"><b>◉</b>Credit</button>
+</nav>
+</div>
+
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+<script>
+const customers=[['Ravi','₹2,450','Today'],['Kumar','₹850','Yesterday'],['Arun','₹0','Sep 18']];
+const tx=[['Rice sale','₹1,500','Sale'],['Oil sale','₹850','Sale'],['Ravi credit','₹500','Credit'],['Supplier payment','₹3,000','Expense'],['Vegetable purchase','₹1,250','Expense'],['Customer payment','₹700','Paid']];
+function show(id,btn){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');if(btn){document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));btn.classList.add('active')}window.scrollTo(0,0)}
+function modal(content){document.getElementById('sheet').innerHTML=content;document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function openAdd(){modal(`<h2>Add transaction</h2><div class="optiongrid">
+<button class="option" onclick="addTransaction('Sale')">🛒<br><b>Sale</b></button><button class="option" onclick="addTransaction('Expense')">💸<br><b>Expense</b></button>
+<button class="option" onclick="addTransaction('Credit Sale')">👤<br><b>Credit Sale</b></button><button class="option" onclick="addTransaction('Payment Received')">💰<br><b>Payment Received</b></button>
+<button class="option" onclick="addTransaction('Stock Purchase')">📦<br><b>Stock Purchase</b></button><button class="option" onclick="openScan()">📄<br><b>Scan Bill</b></button>
+<button class="option" onclick="openVoice()">🎤<br><b>Voice Entry</b></button></div><button class="secondary" style="width:100%;margin-top:14px" onclick="closeModal()">Cancel</button>`)}
+function addTransaction(type){modal(`<h2>${type}</h2><label>Description</label><input class="input" id="desc" placeholder="e.g. Rice sale"><label>Amount (₹)</label><input class="input" id="amt" type="number" placeholder="500"><button class="primary" style="width:100%" onclick="saveTx()">Save transaction</button>`)}
+function saveTx(){let d=document.getElementById('desc').value||'New transaction',a=document.getElementById('amt').value||0;tx.unshift([d,'₹'+Number(a).toLocaleString('en-IN'),'New']);closeModal();renderLedger();alert('Transaction added to your demo ledger.')}
+function openVoice(){modal(`<div class="center"><h2>🎤 Tell me what happened.</h2><p class="muted">Example: “Ravi bought groceries for 500 rupees on credit.”</p><button class="mic" id="mic" onclick="startVoice()">🎤</button><p id="voiceStatus" class="muted">Tap the microphone to speak</p><input class="input" id="voiceText" placeholder="Or type your transaction here"><button class="primary" style="width:100%" onclick="parseVoice()">Understand & Confirm</button></div>`)}
+function startVoice(){let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){document.getElementById('voiceStatus').textContent='Speech recognition is unavailable here. Use the text box below.';return}let r=new SR();r.lang='en-IN';r.onstart=()=>document.getElementById('voiceStatus').textContent='Listening…';r.onresult=e=>{document.getElementById('voiceText').value=e.results[0][0].transcript;document.getElementById('voiceStatus').textContent='Got it — review before saving.'};r.onerror=()=>document.getElementById('voiceStatus').textContent='Could not hear that. Please type it instead.';r.start()}
+function parseVoice(){let t=document.getElementById('voiceText').value||'Ravi bought groceries for 500 rupees on credit';let m=t.match(/(?:₹|rs\\.?\\s*|rupees?\\s*)([0-9,]+)/i);let amount=m?Number(m[1].replace(/,/g,'')):500;let name=(t.match(/^(\\w+)/)||['','Ravi'])[1];modal(`<h2>Add this transaction?</h2><div class="card"><div class="item"><b>Customer</b><br>${name}</div><div class="item"><b>Type</b><br>Sale</div><div class="item"><b>Amount</b><br>₹${amount.toLocaleString('en-IN')}</div><div class="item"><b>Payment</b><br>Credit</div><div class="item"><b>Date</b><br>Today</div></div><div class="actions"><button class="secondary" onclick="closeModal()">Cancel</button><button class="primary" onclick="tx.unshift(['${name} credit','₹${amount}','Credit']);closeModal();renderLedger();alert('Added to Khata.')">Confirm</button></div>`)}
+function openScan(){modal(`<div class="center"><h2>📷 Scan bill</h2><p class="muted">Take a photo or upload a bill. Demo OCR will extract example fields.</p><input class="input" type="file" accept="image/*" onchange="demoOCR()"><button class="secondary" style="width:100%;margin:6px 0" onclick="demoOCR()">Take Photo</button><div id="ocr"></div></div>`)}
+function demoOCR(){document.getElementById('ocr').innerHTML=`<div class="card" style="text-align:left;margin-top:12px"><b>Demo OCR result</b><div class="item">Vendor: Chennai Wholesale Mart</div><div class="item">Date: Today</div><div class="item">Invoice: INV-1042</div><div class="item">Rice — 5 × ₹500 = ₹2,500</div><div class="item">Oil — 2 × ₹180 = ₹360</div><div class="item"><b>Total = ₹2,860</b></div><button class="primary" style="width:100%" onclick="tx.unshift(['Wholesale Mart bill','₹2,860','Expense']);closeModal();renderLedger();alert('Bill added to expenses.')">Add to Expenses</button></div>`}
+function tab(btn,type){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');let el=document.getElementById('ledger');if(type==='customers')el.innerHTML=customers.map(c=>`<div class="card item"><div class="row"><div><b>${c[0]}</b><div class="muted">Last: ${c[2]}</div></div><div><b>${c[1]}</b><br><button class="secondary" style="padding:6px 9px;margin-top:5px" onclick="alert('Customer actions: Add Credit, Record Payment, Send Reminder')">Manage</button></div></div></div>`).join('');else if(type==='suppliers')el.innerHTML='<div class="card"><b>Suppliers</b><div class="item">Chennai Wholesale Mart <span class="muted">• recent purchase</span></div><div class="item">Fresh Foods Supplier</div></div>';else el.innerHTML=tx.map(x=>`<div class="card item"><div class="row"><div><b>${x[0]}</b><div class="muted">${x[2]}</div></div><b>${x[1]}</b></div></div>`).join('')}
+function renderLedger(){tab(document.querySelector('.tab.active'),'customers')}
+function ask(q){let ans=q.includes('item')?'Rice is your top recorded sale item in the demo data.':q.includes('owes')?'Ravi owes ₹2,450 and Kumar owes ₹850.':'Your demo weekly expenses are ₹4,250.';modal(`<h2>KhataPilot AI</h2><p class="muted">${q}</p><div class="card"><b>AI answer</b><p>${ans}</p></div><button class="primary" style="width:100%" onclick="closeModal()">Done</button>`)}
+function bars(id,vals){let e=document.getElementById(id);e.innerHTML=vals.map((v,i)=>`<div class="barwrap"><div class="bar ${i===vals.length-1?'today':''}" style="height:${v}%"></div><div class="barlabel">${i+1}</div></div>`).join('')}
+bars('chart',[38,55,48,72,60,82,90]);bars('forecast',[44,58,66,72,80,88,96]);renderLedger();
+</script>
+</body></html>
